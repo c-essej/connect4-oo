@@ -1,3 +1,4 @@
+"use strict";
 /** Connect Four
  *
  * Player 1 and 2 alternate turns. On each turn, a piece is dropped down a
@@ -8,7 +9,7 @@
 // const WIDTH = 7;
 // const HEIGHT = 6;
 
-let currPlayer = 1; // active player: 1 or 2
+// let currPlayer = 1; // active player: 1 or 2
 // let board = []; // array of rows, each row is array of cells  (board[y][x])
 
 /** makeBoard: create in-JS board structure:
@@ -20,6 +21,10 @@ class Game {
     this.height = height;
     this.width = width;
     this.board = [];
+    this.currPlayer = 1;
+
+    this.makeBoard();
+    this.makeHtmlBoard();
   }
 
   makeBoard() {
@@ -35,7 +40,7 @@ class Game {
     // make column tops (clickable area for adding a piece to that column)
     const top = document.createElement('tr');
     top.setAttribute('id', 'column-top');
-    top.addEventListener('click', handleClick.bind(round1));
+    top.addEventListener('click', this.handleClick.bind());
 
     for (let x = 0; x < this.width; x++) {
       const headCell = document.createElement('td');
@@ -61,7 +66,7 @@ class Game {
 
   findSpotForCol(x) {
     for (let y = this.height - 1; y >= 0; y--) {
-      if (!board[y][x]) {
+      if (!this.board[y][x]) {
         return y;
       }
     }
